@@ -28,24 +28,26 @@ class Robot(webdriver.Chrome) :
 
 	started = False
 
-	def __init__(self, openWindow=True):
-		
-		if not Robot.started :
-			
-			if openWindow:
-				chrome_service = ChromeService()
-				chrome_service.creation_flags = CREATE_NO_WINDOW
+	def __init__(self):
+		pass
 
-				super().__init__(service=chrome_service)
-				self.getAuth = None
-				self.maximize_window()
-				self.implicitly_wait(0.3)
-				
-				self.windowHandle = self.current_window_handle
-				
+	def start(self):
+	
+		if not Robot.started:
+	
+			chrome_service = ChromeService()
+			#chrome_service.creation_flags = CREATE_NO_WINDOW
+
+			super().__init__(service=chrome_service)
+			self.getAuth = None
+			self.maximize_window()
+			self.implicitly_wait(0.3)
+			
+			self.windowHandle = self.current_window_handle
+			
+			Robot.started = True
 			self.loggedInSEI = False
 			self.loggedInSC = False
-			Robot.started = True
 	
 	def logInSistemasCorporativos(self) :
 
@@ -278,8 +280,8 @@ class Robot(webdriver.Chrome) :
 		AC.key_up(Keys.ALT)
 		AC.perform()
 		
-		self.wait(1)
-		self.quit()
+		self.wait(3)
+		self.close()
 		self.switch_to.window(originalHandle)
 		
 		
